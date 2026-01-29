@@ -92,8 +92,10 @@ Enter your choice: '''))
              print("- ", db[0]) 
           db_name=input("Enter database name from above to delete: ")
           cursor.execute(f"DROP DATABASE `{db_name}`")
+          conn.commit()
           print(f"Database {db_name} has been deleted successfully")
        except Exception as e:
+          conn.rollback()
           print("Error:", e)
 
     elif(i==2):
@@ -106,11 +108,15 @@ Enter your choice: '''))
          for db in a:
              print("- ", db[0]) 
          table=input("Enter table name from above to delete: ")
-         cursor.execute(f"DROP `{table}`")
+         cursor.execute(f"DROP TABLE `{table}`")
+         conn.commit()
          print(f"Table {table} has been deleted successfully")
 
        except Exception as e:
+          conn.rollback()
           print("Error:", e)
+    else:
+       print("Invalid choice")
 
 
 def get_table():
